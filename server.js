@@ -61,10 +61,12 @@ function fetchView(viewName) {
         if (err) {
             throw err;
         }
-        csp.putAsync(ch, body.rows.map(function(doc) {
-            doc.value.date = toTime(doc.value.date);
-            return doc.value;
-        }));
+        csp.putAsync(ch, {
+            history: body.rows.map(function(doc) {
+                doc.value.date = toTime(doc.value.date);
+                return doc.value;
+            })
+        });
     });
     return ch;
 }
