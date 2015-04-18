@@ -13,7 +13,7 @@ nano.db.create(dbName, function(err, body) {
 var csp = require('js-csp'),
     express = require('express'),
     app = express(),
-    server = app.listen(3000, 'localhost', serve);
+    server = app.listen(3000, '0.0.0.0', serve);
 
 //
 // Routes
