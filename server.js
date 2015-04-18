@@ -62,10 +62,20 @@ function fetchView(viewName) {
             throw err;
         }
         csp.putAsync(ch, body.rows.map(function(doc) {
+            doc.value.date = toTime(doc.value.date);
             return doc.value;
         }));
     });
     return ch;
+}
+
+function toTime(dateString) {
+    var date = new Date(dateString);
+    if (date.getTime) {
+        return date.getTime();
+    } else {
+        return undefined;
+    }
 }
 
 function getTemp() {
