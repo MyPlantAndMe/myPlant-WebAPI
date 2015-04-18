@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --harmony server.js"
+    "start": "pm2 start --node-args=\"--harmony\" server.js"
   },
   "author": "Samuel El-Borai <samuel.elborai@gmail.com>",
   "license": "ISC",
