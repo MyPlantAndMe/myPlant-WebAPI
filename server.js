@@ -29,6 +29,20 @@ app.get('/temp', function(req, res) {
     });
 });
 
+app.get('/luminosity', function(req, res) {
+    csp.go(function*() {
+        var l = yield getLuminosity();
+        res.send(l);
+    });
+});
+
+app.get('/humidity', function(req, res) {
+    csp.go(function*() {
+        var h = yield getHumidity();
+        res.send(h);
+    });
+});
+
 //
 // Setup
 //
@@ -57,5 +71,17 @@ function fetchView(viewName) {
 function getTemp() {
     return csp.go(function*() {
         return (yield fetchView('tempByDate'));
+    });
+}
+
+function getLuminosity() {
+    return csp.go(function*() {
+        return (yield fetchView('luminosityByDate'));
+    });
+}
+
+function getHumidity() {
+    return csp.go(function*() {
+        return (yield fetchView('humidityByDate'));
     });
 }
