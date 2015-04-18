@@ -3,7 +3,7 @@ var nano = require('nano')('http://localhost:5984'),
     dbName = 'myplantandme',
     db = nano.use(dbName),
 
-    designDocument = require('db_design.json');
+    designDocument = require('./db_design.json');
 
 function log(docId) {
     console.log("Create document " + docId + " into database " + dbName + ".");
