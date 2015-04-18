@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --harmony server.js"
   },
-  "author": "",
+  "author": "Samuel El-Borai <samuel.elborai@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "express": "^4.12.3",

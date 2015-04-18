@@ -1,8 +1,8 @@
-You need `node` and `npm`.
+You need `node`, `npm` and a running `couchdb`.
 
 ```
 # Install deps
 npm install
 # Run the server
-node server.js
+npm start
 ```
