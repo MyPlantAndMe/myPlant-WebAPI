@@ -1,6 +1,9 @@
 /*jshint esnext: true*/
-/*global require*/
-var nano = require('nano')('http://localhost:5984'),
+/*global require, module*/
+var emitter;
+
+var colors = require('colors/safe'),
+    nano = require('nano')('http://localhost:5984'),
     dbName = 'myplantandme',
     db = nano.use(dbName);
 
@@ -11,17 +14,13 @@ nano.db.create(dbName, function(err, body) {
 });
 
 var csp = require('js-csp'),
+    bodyParser = require('body-parser'),
     express = require('express'),
-    app = express(),
-    server = app.listen(3000, '0.0.0.0', serve);
+    app = express();
 
-//
+app.use(bodyParser.urlencoded({extended: true}));
+
 // Routes
-//
-app.get('/', function(req, res) {
-    res.send('Hello from server');
-});
-
 app.get('/temp', function(req, res) {
     csp.go(function*() {
         var t = yield getTemp();
@@ -43,18 +42,44 @@ app.get('/humidity', function(req, res) {
     });
 });
 
-//
+/**
+* Params :
+* - duration: timestamp (seconds)
+*/
+app.post('/actions/lights', function(req, res) {
+    emitter.emit('clientAction', 'lights', req.body.duration);
+});
+
+/**
+* Params :
+* - duration: timestamp (seconds)
+*/
+app.post('/actions/fan', function(req, res) {
+    emitter.emit('clientAction', 'fan', req.body.duration);
+});
+
+/**
+* Params :
+* - duration: timestamp (seconds)
+*/
+app.post('/actions/water', function(req, res) {
+    emitter.emit('clientAction', 'water', req.body.duration);
+});
+
 // Setup
-//
-function serve() {
-    var host = server.address().address,
-        port = server.address().port;
-    console.log('Server listening to http://%s:%s', host, port);
+module.exports.create = function create(eventEmitter, host, port) {
+    emitter = eventEmitter;
+    return app.listen(port, host, function() {
+        log('Server listening to http://' + host + ':' + port);
+    });
+};
+
+// Helpers
+function log(s) {
+    console.log(colors.cyan('Web  ', new Date(), '  ', s));
 }
 
-//
 // Read from db
-//
 function fetchView(viewName) {
     var ch = csp.chan();
     db.view('sensors', viewName, function(err, body) {
