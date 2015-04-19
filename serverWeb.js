@@ -47,6 +47,7 @@ app.get('/humidity', function(req, res) {
 * - duration: timestamp (seconds)
 */
 app.post('/actions/lights', function(req, res) {
+    log('POST /actions/lights : \n' + req.body);
     emitter.emit('clientAction', res, 'lights', req.body.duration);
 });
 
@@ -55,6 +56,7 @@ app.post('/actions/lights', function(req, res) {
 * - duration: timestamp (seconds)
 */
 app.post('/actions/fan', function(req, res) {
+    log('POST /actions/fan : \n' + req.body);
     emitter.emit('clientAction', res,  'fan', req.body.duration);
 });
 
@@ -63,6 +65,7 @@ app.post('/actions/fan', function(req, res) {
 * - duration: timestamp (seconds)
 */
 app.post('/actions/water', function(req, res) {
+    log('POST /actions/water : \n' + req.body);
     emitter.emit('clientAction', res, 'water', req.body.duration);
 });
 
