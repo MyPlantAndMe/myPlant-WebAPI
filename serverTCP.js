@@ -21,8 +21,12 @@ module.exports.create = function create(emitter, host, port) {
     });
 };
 
-function handleClientAction(socket, sensor, duration) {
-    socket.write(JSON.stringify({sensor: sensor, duration: duration}));
+function handleClientAction(socket, req, sensor, duration) {
+    var result = socket.write(JSON.stringify({
+        sensor: sensor,
+        duration: duration
+    }) + '\n');
+    req.send(JSON.stringify({ok: result}));
 }
 
 //
