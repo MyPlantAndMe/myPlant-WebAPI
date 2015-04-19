@@ -3,7 +3,7 @@
    "language": "javascript",
    "views": {
        "tempByDate": {
-           "map": "function(doc) {\n  if (doc.type === 'temp') {\n    var date = new Date(doc.date);\n    emit(date.getTime(), {date: date, value: doc.value});\n  }\n}\t"
+           "map": "function(doc) {\n  if (doc.type === 'temperature') {\n    var date = new Date(doc.date);\n    emit(date.getTime(), {date: date, value: doc.value});\n  }\n}\t"
        },
        "humidityByDate": {
            "map": "function(doc) {\n  if (doc.type === 'humidity') {\n    var date = new Date(doc.date);\n    emit(date.getTime(), {date: date, value: doc.value});\n  }\n}\t"
